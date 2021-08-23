@@ -1,7 +1,6 @@
 import uslug from 'uslug';
 import markdownItAnchor from 'markdown-it-anchor';
 import markdownItTocDoneRight from 'markdown-it-toc-done-right';
-import prism from 'markdown-it-prism';
 
 const uslugify = (s) => uslug(s);
 
@@ -23,8 +22,7 @@ export default function installMarkdownPlugins(md, options) {
     slugify: uslugify,
   };
 
-  md.use(prism)
-    .use(markdownItAnchor, markdownItAnchorOps)
+  md.use(markdownItAnchor, markdownItAnchorOps)
     .use(markdownItTocDoneRight, markdownItTocDoneRightOps);
 
   // 全局替换渲染的 a 标签跳转新窗口
