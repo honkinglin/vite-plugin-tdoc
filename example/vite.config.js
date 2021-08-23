@@ -13,6 +13,9 @@ export default defineConfig({
   plugins: [
     reactRefresh(),
     vitePluginTdoc({
+      customRenderInfo() {
+        return {test: 1}
+      },
       mdClassPrefix: 'x', 
       // plugins: [],
       markdownItSetup(md) {
@@ -62,6 +65,7 @@ export default defineConfig({
           return source;
         },
         after(source, _id, _renderInfo, _md) {
+          console.log(_renderInfo)
           const demoDefsStr = Object.keys(demoImports)
             .map((key) => demoImports[key])
             .join('\n');

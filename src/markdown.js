@@ -11,11 +11,11 @@ export function createMarkdown(options) {
   options.markdownItSetup(md, options);
 
   return (raw, id) => {
-    const renderInfo = {};
+    let renderInfo = {};
     const { transforms, customRenderInfo } = options;
 
     // 自定义解析数据 after 钩子上使用
-    if (customRenderInfo) Object(renderInfo, customRenderInfo(raw, md));
+    if (customRenderInfo) renderInfo = customRenderInfo(raw, id, md);
 
     if (transforms.before) raw = transforms.before(raw, id);
 
