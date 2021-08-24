@@ -14,10 +14,10 @@ export function createMarkdown(options) {
     let renderInfo = {};
     const { transforms, customRenderInfo } = options;
 
+    if (transforms.before) raw = transforms.before(raw, id);
+
     // 自定义解析数据 after 钩子上使用
     if (customRenderInfo) renderInfo = customRenderInfo(raw, id, md);
-
-    if (transforms.before) raw = transforms.before(raw, id);
 
     let html = md.render(`\${toc}\r\n${raw}`);
 
