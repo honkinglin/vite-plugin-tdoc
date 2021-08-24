@@ -1,10 +1,10 @@
 {
   "name": "vite-plugin-tdoc",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/vite-plugin-tdoc.cjs.js",
   "module": "dist/vite-plugin-tdoc.esm.js",
   "dependencies": {
-    "markdown-it": "^12.2.0",
+    "markdown-it": "^8.4.2",
     "markdown-it-anchor": "^8.1.2",
     "markdown-it-toc-done-right": "^4.2.0",
     "uslug": "^1.0.4"
