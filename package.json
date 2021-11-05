@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-tdoc",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "dist/vite-plugin-tdoc.cjs.js",
   "module": "dist/vite-plugin-tdoc.esm.js",
   "dependencies": {
