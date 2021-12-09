@@ -7,11 +7,11 @@ export default [
 	{
 		input: 'src/main.js',
 		output: [
-			{ file: pkg.main, format: 'cjs' },
-			{ file: pkg.module, format: 'es' }
+			{ file: pkg.main, format: 'cjs', exports: "auto" },
+			{ file: pkg.module, format: 'es', exports: "auto" },
 		],
 		plugins: [
-			resolve(),
+			resolve({ preferBuiltins: true }),
 			commonjs(),
 			json(),
 		]

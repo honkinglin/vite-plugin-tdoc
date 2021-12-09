@@ -1,9 +1,9 @@
-import path from 'path'
 import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import vitePluginTdoc from '../dist/vite-plugin-tdoc.esm';
+import react from '@vitejs/plugin-react'
+import vitePluginTdoc from '../dist/vite-plugin-tdoc.esm.js';
 import { transformSync } from '@babel/core';
-import markdownItContainer from 'markdown-it-container';
+import matter from 'gray-matter';
+import path from 'path'
 
 let demoImports = {};
 let demoCodeImports = {};
@@ -11,46 +11,49 @@ let demoCodeImports = {};
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    reactRefresh(),
+    react(),
     vitePluginTdoc({
-      customRenderInfo() {
-        return {test: 1}
-      },
-      mdClassPrefix: 'x', 
-      // plugins: [],
-      markdownItSetup(md) {
-        md.use(markdownItContainer, 'demo', {
-          validate(params) {
-            return params.trim().match(/^demo\s+([\\/.\w-]+)(\s+(.+?))?(\s+--dev)?$/);
-          },
-          render(tokens, idx) {
-            if (tokens[idx].nesting === 1) {
-              const match = tokens[idx].info.trim().match(/^demo\s+([\\/.\w-]+)(\s+(.+?))?(\s+--dev)?$/);
-              const [, demoPath, componentName = ''] = match;
-              const demoPathOnlyLetters = demoPath.replace(/[^a-zA-Z\d]/g, '');
-              const demoName = path.basename(demoPath).trim();
-              const demoDefName = `Demo${demoPathOnlyLetters}`;
-              const demoCodeDefName = `Demo${demoPathOnlyLetters}Code`;
-      
-              const tpl = `
-                <div>
-                  <${demoDefName} />
-                  <code>{${demoCodeDefName}}</code>
-                </div>
-              `;
-      
-              tokens.tttpl = tpl;
-      
-              return `<div className="${componentName.trim()}-${demoName}">`;
-            }
-            if (tokens.tttpl) return `${tokens.tttpl || ''}</div>`;
-      
-            return '';
-          },
-        })
+      markdown: {
+        toc: {
+          containerClass: `t-toc_container`,
+          listClass: `t-toc_list`,
+          itemClass: `t-toc_list_item`,
+          linkClass: `t-toc_list_item_a`,
+        },
+        container(md, container) {
+          md.use(container, 'demo', {
+            validate(params) {
+              return params.trim().match(/^demo\s+([\\/.\w-]+)(\s+(.+?))?(\s+--dev)?$/);
+            },
+            render(tokens, idx) {
+              if (tokens[idx].nesting === 1) {
+                const match = tokens[idx].info.trim().match(/^demo\s+([\\/.\w-]+)(\s+(.+?))?(\s+--dev)?$/);
+                const [, demoPath, componentName = ''] = match;
+                const demoPathOnlyLetters = demoPath.replace(/[^a-zA-Z\d]/g, '');
+                const demoName = path.basename(demoPath).trim();
+                const demoDefName = `Demo${demoPathOnlyLetters}`;
+                const demoCodeDefName = `Demo${demoPathOnlyLetters}Code`;
+        
+                const tpl = `
+                  <div>
+                    <${demoDefName} />
+                    <code>{${demoCodeDefName}}</code>
+                  </div>
+                `;
+        
+                tokens.tttpl = tpl;
+        
+                return `<div className="${componentName.trim()}-${demoName}">`;
+              }
+              if (tokens.tttpl) return `${tokens.tttpl || ''}</div>`;
+        
+              return '';
+            },
+          })
+        }
       },
       transforms: {
-        before(source) {
+        before({ source, file, md}) {
           demoImports = {};
           demoCodeImports = {};
     
@@ -61,11 +64,13 @@ export default defineConfig({
             demoImports[demoDefName] = `import ${demoDefName} from './${relativeDemoPath}.jsx';`;
             demoCodeImports[demoCodeDefName] = `import ${demoCodeDefName} from './${relativeDemoPath}.jsx?raw';`;
           });
+
+          const { content, data: pageData } = matter(source);
+          console.log('pageData', pageData)
     
-          return source;
+          return content;
         },
-        after(source, _id, _renderInfo, _md) {
-          console.log(_renderInfo)
+        after({ result, file, source, md }) {
           const demoDefsStr = Object.keys(demoImports)
             .map((key) => demoImports[key])
             .join('\n');
@@ -81,11 +86,11 @@ export default defineConfig({
               export default function Doc(props) {
 
                 return (
-                  <div name="DEMO">${source.replace(/class=/g, 'className=')}</div>
+                  <div name="DEMO">${result.html.replace(/class=/g, 'className=')}</div>
                 )
               }
             `;
-          const result = transformSync(reactSource, {
+          const reactResult = transformSync(reactSource, {
             babelrc: false,
             configFile: false,
             sourceMaps: true,
@@ -95,7 +100,7 @@ export default defineConfig({
             presets: [require('@babel/preset-react')],
           });
     
-          return { code: result.code, map: result.map };
+          return { code: reactResult.code, map: reactResult.map };
         },
       }
     })

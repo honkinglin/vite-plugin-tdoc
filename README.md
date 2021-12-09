@@ -11,20 +11,18 @@ import vitePluginTdoc from 'vite-plugin-tdoc';
 export default {
   plugins: [
     vitePluginTdoc({
-      // useCustomMdPlugin: false, // default false
-      mdClassPrefix: 'x', // markdown-it-anchor class prefix
-      plugins: [], // other plugins
-      customRenderInfo(source, md) {
-        // return { content: '' }
+      markdown: {
+        container(md, container) {},  // markdown-it-container
+        attrs: {}, // markdown-it-attrs
+        anchor: {}, // markdown-it-anchor
+        toc: {}, // markdown-it-toc-done-right
+        config(md) {}, // custom md config
+        lineNumbers: false, // highlight lineNumber
       },
-      markdownItSetup(md) {
-        // md.use...
-      },
-      transforms: {
-        before(_source, _id) {},
-        after(_source, _id, _renderInfo, _md) {
-          // _renderInfo is from customRenderInfo api
-        }
+      plugins: [], // other plugins for vite
+      transforms: { // markdown transform progress
+        before({ source, file, md }) {},
+        after({ result, source, file, md }) {}
       }
     })
   ]

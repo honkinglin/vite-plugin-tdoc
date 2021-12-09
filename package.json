@@ -1,21 +1,29 @@
 {
   "name": "vite-plugin-tdoc",
-  "version": "1.0.6",
+  "version": "2.0.0-beta.1",
   "main": "dist/vite-plugin-tdoc.cjs.js",
   "module": "dist/vite-plugin-tdoc.esm.js",
   "dependencies": {
-    "markdown-it": "^8.4.2",
+    "diacritics": "^1.3.0",
+    "escape-html": "^1.0.3",
+    "markdown-it": "^12.0.6",
     "markdown-it-anchor": "^8.1.2",
+    "markdown-it-attrs": "^4.0.0",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-emoji": "^2.0.0",
     "markdown-it-toc-done-right": "^4.2.0",
+    "prismjs": "^1.25.0",
     "uslug": "^1.0.4"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
+    "rimraf": "^3.0.2",
     "rollup": "^2.56.3"
   },
   "scripts": {
+    "prebuild": "rimraf -rf dist",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "test": "node test/test.js",
