@@ -10,10 +10,19 @@ let demoCodeImports = {};
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+    port: 5000,
+    open: '/',
+    https: false,
+  },
   plugins: [
     react(),
     vitePluginTdoc({
       markdown: {
+        anchor: {
+          tabIndex: false,
+        },
         toc: {
           containerClass: `t-toc_container`,
           listClass: `t-toc_list`,

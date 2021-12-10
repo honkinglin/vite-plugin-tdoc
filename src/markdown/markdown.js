@@ -43,6 +43,7 @@ export const createMarkdownRenderer = (options) => {
       slugify,
       permalink: anchor.permalink.ariaHidden({}),
       ...options.anchor,
+      ...(options.anchor.config ? options.anchor.config(anchor) : {}),
     })
     .use(toc, {
       slugify,

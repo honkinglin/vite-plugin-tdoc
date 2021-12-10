@@ -21,8 +21,9 @@ export default {
       },
       plugins: [], // other plugins for vite
       transforms: { // markdown transform progress
-        before({ source, file, md }) {},
-        after({ result, source, file, md }) {}
+        before({ source, file, md }) {}, // before transform
+        render({ source, file, md }) {}, // custom render or use default render
+        after({ result, source, file, md }) {} // after render or default render
       }
     })
   ]

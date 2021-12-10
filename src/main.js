@@ -6,10 +6,15 @@ function createMarkdown(options) {
 
   return (source, file) => {
     const { transforms = {} } = options;
+    let result = source;
 
     if (transforms.before) source = transforms.before({ source, file, md });
 
-    let result = md.render(source);
+    if (transforms.render) {
+      result = transforms.render({ source, file, md });
+    } else {
+      result = md.render(source);
+    }
 
     if (transforms.after) result = transforms.after({ result, source, file, md });
 
