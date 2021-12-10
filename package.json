@@ -32,5 +32,10 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HQ-Lin/vite-plugin-tdoc.git"
+  },
+  "author": "kyrielin"
 }
