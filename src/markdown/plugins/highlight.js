@@ -5,7 +5,7 @@ import prism from "prismjs";
 const loadLanguages = require("prismjs/components/index");
 
 // required to make embedded highlighting work...
-loadLanguages(["markup", "css", "javascript", "jsx"]);
+loadLanguages(["markup", "css", "javascript", "jsx", "bash", "python", "go"]);
 
 function wrap(code, lang) {
   if (lang === "text") {
