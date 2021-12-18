@@ -2,6 +2,8 @@
 
 Transform markdown into anything for vite plugin
 
+Inspired by [vitepress](https://github.com/vuejs/vitepress)
+
 ## Getting started
 
 ```js
@@ -29,6 +31,10 @@ export default {
   ]
 }
 ```
+
+## Schematics
+
+![Schematics](./docs/vite-plugin-tdoc.png)
 
 ## License
 
