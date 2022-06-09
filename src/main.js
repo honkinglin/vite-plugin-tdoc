@@ -3,6 +3,7 @@ import { createMarkdownRenderer } from './markdown/markdown';
 function createMarkdown(options) {
   const { markdown = {} } = options;
   const md = createMarkdownRenderer(markdown);
+  if (options.markdown && options.markdown.init) options.markdown.init({ md })
 
   return (source, file) => {
     const { transforms = {} } = options;
