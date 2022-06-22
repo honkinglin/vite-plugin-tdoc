@@ -10,6 +10,8 @@ navbar: true
 
 # Test
 
+### a.info
+
 ### Render custom demos
 
 ::: demo demos/test

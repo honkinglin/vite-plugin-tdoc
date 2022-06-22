@@ -24,6 +24,9 @@ export const createMarkdownRenderer = (options) => {
     ...options,
   });
 
+  // disable info domain
+  md.linkify.tlds('.info', false);
+
   // custom plugins
   md.use(componentPlugin)
     .use(highlightLinePlugin)
