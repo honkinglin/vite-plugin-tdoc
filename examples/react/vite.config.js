@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import vitePluginTdoc from '../dist/vite-plugin-tdoc.esm.js';
+import vitePluginTdoc from '../../dist/vite-plugin-tdoc.esm.js';
 import { transformSync } from '@babel/core';
 import matter from 'gray-matter';
 import path from 'path'
