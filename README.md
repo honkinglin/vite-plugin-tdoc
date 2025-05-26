@@ -1,6 +1,6 @@
 # vite-plugin-tdoc
 
-Transform markdown into anything for vite plugin
+Transform markdown into anything for vite plugin.
 
 Inspired by [vitepress](https://github.com/vuejs/vitepress)
 
