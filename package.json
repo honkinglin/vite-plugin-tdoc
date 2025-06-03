@@ -28,7 +28,8 @@
     "dev": "rollup -c -w",
     "test": "node test/test.js",
     "pretest": "npm run build",
-    "example": "cd example && npm run dev"
+    "example:react": "cd examples/react && npm run dev",
+    "example:vue": "cd examples/vue && npm run dev"
   },
   "files": [
     "dist"
